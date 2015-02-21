@@ -43,7 +43,9 @@ def move():
     
     # for snake in snakes
     for snake in data['snakes']:
-      for coord in snake['coords']
+      for coord in snake['coords']:
+        print 'fffl'
+    
     # get coordinates 
     # accumulate coordinates
 
