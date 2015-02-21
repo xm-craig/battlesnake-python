@@ -33,19 +33,23 @@ def move():
     oursnake = 0
 
     for snake in data["snakes"]:
-        if(snake.name) == 'aspkickers':
-            oursnake = snake
+      if(snake.name) == 'aspkickers':
+        oursnake = snake
 
 
     print data['snakes'][oursnake]['coords']
     print data['food']
 
     
+    all_snakes = []
     # for snake in snakes
     for snake in data['snakes']:
       for coord in snake['coords']:
-        print 'fffl'
-    
+        all_snakes.append(coord)
+
+    print all_snakes
+      
+
     # get coordinates 
     # accumulate coordinates
 
