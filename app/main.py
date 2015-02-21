@@ -30,7 +30,7 @@ def move():
     print data['snakes']
     print data['food']
 
-    oursnake
+    oursnake = 0
 
     for snake in data["snakes"]:
         if(snake.name) == 'aspkickers':
