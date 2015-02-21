@@ -18,7 +18,7 @@ def start():
         'name': 'aspkickers',
         'color': '#00ffff',
         'head_url': './static/woody.png',
-        'taunt': 'There's a snake in my boot!'
+        'taunt': 'There\'s a snake in my boot!'
     })
 
 
