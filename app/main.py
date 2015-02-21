@@ -26,13 +26,23 @@ def start():
 @bottle.post('/move')
 def move():
     data = bottle.request.json
-    print data["snakes"]['name']["coords"]
+    oursnake;
+
+    for snake = data["snakes"]:
+        if(snake.name) == 'aspkickers':
+            oursnake = snake
+
+
+    print data["snakes"][oursnake]["coords"]
     print data["food"]
     
     return json.dumps({
         'move': 'right',
         'taunt': 'You\'re my favourite deputy!'
     })
+
+def isWall(point):
+    x_co = point[]
 
 
 @bottle.post('/end')
