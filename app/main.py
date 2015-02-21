@@ -27,8 +27,8 @@ def start():
 def move():
     data = bottle.request.json
 
-    print data['snakes']
-    print data['food']
+    #print data['snakes']
+    #print data['food']
 
     oursnake = 0
 
@@ -37,8 +37,8 @@ def move():
             oursnake = snake
 
 
-    print data["snakes"][oursnake]["coords"]
-    print data["food"]
+    print data['snakes'][oursnake]['coords']
+    print data['food']
 
     
     # from head coord 
