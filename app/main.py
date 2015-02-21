@@ -26,7 +26,7 @@ def start():
 @bottle.post('/move')
 def move():
     data = bottle.request.json
-    print data['snakes']['aspkickers']['coords']
+    print data['snakes']
     print data['food']
     
     # from head coord 
