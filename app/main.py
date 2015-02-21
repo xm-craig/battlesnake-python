@@ -18,7 +18,7 @@ def start():
     return json.dumps({
         'name': 'aspkickers',
         'color': '#00ffff',
-        'head_url': './static/woody.png',
+        'head_url': 'woody.png',
         'taunt': 'There\'s a snake in my boot!'
     })
 
