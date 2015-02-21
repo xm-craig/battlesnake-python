@@ -18,7 +18,7 @@ def start():
     return json.dumps({
         'name': 'aspkickers',
         'color': '#00ffff',
-        'head_url': 'woody.png',
+        'head_url': 'http://i.imgur.com/jhitWnu.png',
         'taunt': 'There\'s a snake in my boot!'
     })
 
@@ -31,7 +31,7 @@ def move():
     
     return json.dumps({
         'move': 'right',
-        'taunt': 'battlesnake-python!'
+        'taunt': 'You\'re my favourite deputy!'
     })
 
 
