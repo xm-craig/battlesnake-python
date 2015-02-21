@@ -26,9 +26,17 @@ def start():
 @bottle.post('/move')
 def move():
     data = bottle.request.json
-    print data["snakes"]['name']["coords"]
-    print data["food"]
+    print data['snakes']['aspkickers']['coords']
+    print data['food']
     
+    # from head coord 
+    # check up, down, left right
+    # for snake. how do we tell if it's a snake?
+    # 
+    # return true or false
+
+
+
     return json.dumps({
         'move': 'right',
         'taunt': 'You\'re my favourite deputy!'
