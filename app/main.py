@@ -41,12 +41,11 @@ def move():
     print data["food"]
 
     
-    # from head coord 
-    # check up, down, left right
-    # for snake. how do we tell if it's a snake?
-    # 
-    # return true or false
-
+    # for snake in snakes
+    for snake in data['snakes']:
+      for coord in snake['coords']
+    # get coordinates 
+    # accumulate coordinates
 
 
     return json.dumps({
