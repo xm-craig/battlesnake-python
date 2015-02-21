@@ -26,20 +26,20 @@ def start():
 @bottle.post('/move')
 def move():
     data = bottle.request.json
-<<<<<<< HEAD
-    oursnake;
 
-    for snake = data["snakes"]:
+    print data['snakes']
+    print data['food']
+
+    oursnake
+
+    for snake in data["snakes"]:
         if(snake.name) == 'aspkickers':
             oursnake = snake
 
 
     print data["snakes"][oursnake]["coords"]
     print data["food"]
-=======
-    print data['snakes']
-    print data['food']
->>>>>>> origin/master
+
     
     # from head coord 
     # check up, down, left right
