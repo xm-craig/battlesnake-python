@@ -17,7 +17,7 @@ def start():
 
     return json.dumps({
         'name': 'aspkickers',
-        'color': '#66ffcc',
+        'color': '#00ffff',
         'head_url': 'http://battlesnake-python.herokuapp.com',
         'taunt': 'battlesnake-python!'
     })
