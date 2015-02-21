@@ -59,8 +59,9 @@ def move():
         'taunt': 'You\'re my favourite deputy!'
     })
 
-def isWall(point):
-    x_co = point[]
+#def isWall(point):
+
+
 
 
 @bottle.post('/end')
