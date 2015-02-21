@@ -14,7 +14,7 @@ def index():
 @bottle.post('/start')
 def start():
     data = bottle.request.json
-
+    print 'start!!!!!', data.coords
     return json.dumps({
         'name': 'aspkickers',
         'color': '#00ffff',
@@ -27,6 +27,7 @@ def start():
 def move():
     data = bottle.request.json
     print data
+
     return json.dumps({
         'move': 'right',
         'taunt': 'battlesnake-python!'
