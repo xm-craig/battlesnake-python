@@ -27,18 +27,18 @@ def start():
 def move():
     data = bottle.request.json
 
-    print data['snakes']
-    print data['food']
+    #print data['snakes']
+    #print data['food']
 
-    oursnake
+    oursnake = 0
 
     for snake in data["snakes"]:
         if(snake.name) == 'aspkickers':
             oursnake = snake
 
 
-    print data["snakes"][oursnake]["coords"]
-    print data["food"]
+    print data['snakes'][oursnake]['coords']
+    print data['food']
 
     
     # for snake in snakes
