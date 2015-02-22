@@ -30,6 +30,7 @@ def start():
 
 @bottle.post('/move')
 def move():
+	global width, height
 	data = bottle.request.json
 
 	print data['snakes']
@@ -62,13 +63,38 @@ def move():
 	#for each tile, compare coords in tile to coords in all_snakes
 	#if tile coords != all_snakes coords, move there
 
-	x = oursnake[0]
-	y = head[1]
+	x = oursnake_head[0]
+	y = oursnake_head[1]
 	up = [x, y-1]
 	down = [x, y+1]
 	left = [x+1, y]
 	right = [x-1, y]   
 	
+	#check if any of the tiles has a snake in it
+	if up in all_snakes:
+		up = False
+	elif down in all_snakes:
+		down = False
+	elif left in all_snakes:
+		left = False
+	elif right in all_snakes:
+		right = False
+
+
+	our_square = 'up'
+
+	if up is not False:
+		our_square = 'up'
+	elif down is not False:
+		our_square = 'down'
+	elif left is not False:
+		our_square = 'left'
+	elif right is not False:
+		our_square = 'right'
+
+
+
+
 
 
 	#look at left tile
@@ -76,7 +102,7 @@ def move():
 	print all_snakes
 		
 	return json.dumps({
-		'move': 'right',
+		'move': our_square,
 		'taunt': 'You\'re my favourite deputy!'
 	})
 
