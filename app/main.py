@@ -31,16 +31,18 @@ def start():
 def move():
 		data = bottle.request.json
 
+    print data['snakes']
+    print data['food']
 
-		oursnake = 0
+    oursnake_index = 0
 
-		for snake in data["snakes"]:
-			if(snake.name) == 'aspkickers':
-				oursnake = snake
+    for index in range(len(data['snakes'])):
+      if(data['snakes'][index] == 'aspkickers'):
+        oursnake_index = index
 
 
-		print data['snakes'][oursnake]['coords']
-		print data['food']
+    print data['snakes'][oursnake_index]['coords']
+    print data['food']
 
 		all_snakes = []
 		
@@ -57,8 +59,7 @@ def move():
 				'taunt': 'You\'re my favourite deputy!'
 		})
 
-def isWall(point):
-		x_co = point[]
+#def isWall(point):
 
 
 @bottle.post('/end')
