@@ -80,27 +80,17 @@ def move():
 	elif right in all_snakes:
 		right = False
 
-
 	our_square = 'up'
 
-	if up is not False: 
+	if up is not False and not isWall(up): 
 		our_square = 'up'
-	elif down is not False:
+	elif down is not False and not isWall(down):
 		our_square = 'down'
-	elif left is not False:
+	elif left is not False and not isWall(left):
 		our_square = 'left'
-	elif right is not False:
+	elif right is not False and not isWall(right):
 		our_square = 'right'
-
-
-
-
-
-
-	#look at left tile
 	
-	print all_snakes
-		
 	return json.dumps({
 		'move': our_square,
 		'taunt': 'You\'re my favourite deputy!'
