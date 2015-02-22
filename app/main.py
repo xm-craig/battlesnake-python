@@ -1,6 +1,8 @@
 import bottle
 import json
 
+width = 0
+height = 0
 
 @bottle.get('/')
 def index():
@@ -13,7 +15,9 @@ def index():
 
 @bottle.post('/start')
 def start():
+		global width, height
 		data = bottle.request.json
+		width 
 
 		return json.dumps({
 				'name': 'aspkickers',
@@ -27,8 +31,6 @@ def start():
 def move():
 		data = bottle.request.json
 
-		#print data['snakes']
-		#print data['food']
 
 		oursnake = 0
 
@@ -40,8 +42,9 @@ def move():
 		print data['snakes'][oursnake]['coords']
 		print data['food']
 
-		## #CORRESSSCTCTCTCTCTTTT
 		all_snakes = []
+		
+
 		# for snake in snakes
 		for snake in data['snakes']:
 				for coord in snake['coords']:
