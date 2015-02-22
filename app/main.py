@@ -17,7 +17,8 @@ def index():
 def start():
 		global width, height
 		data = bottle.request.json
-		width 
+		width = data['width']
+		height = data['height']
 
 		return json.dumps({
 				'name': 'aspkickers',
@@ -35,11 +36,11 @@ def move():
     print data['food']
 
     oursnake_index = 0
-    oursnake_head = [,]
+    oursnake_head = []
 
     for index in range(len(data['snakes'])):
-      if(data['snakes'][index] == 'aspkickers'):
-        oursnake_index = index
+      	if(data['snakes'][index] == 'aspkickers'):
+       			oursnake_index = index
 
     oursnake_head = data['snakes'][oursnake_index]['coords'][0]
 
@@ -47,6 +48,7 @@ def move():
     print oursnake_head
     print data['food']
 
+    # get the coordinates 
 		all_snakes = []
 		
 		# for snake in snakes
@@ -60,12 +62,12 @@ def move():
    #for each tile, compare coords in tile to coords in all_snakes
    #if tile coords != all_snakes coords, move there
    
-   x = head[0]
-   y = head[1]
-   up = [x, y-1]
-   down = [x, y+1]
-   left = [x+1, y]
-   right = [x-1, y]
+		x = head[0]
+		y = head[1]
+		up = [x, y-1]
+		down = [x, y+1]
+		left = [x+1, y]
+		right = [x-1, y]
    
    #look at left tile
 
