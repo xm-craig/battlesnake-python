@@ -83,7 +83,7 @@ def move():
 
 	our_square = 'up'
 
-	if up is not False:
+	if up is not False: 
 		our_square = 'up'
 	elif down is not False:
 		our_square = 'down'
