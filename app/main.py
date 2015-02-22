@@ -6,26 +6,26 @@ height = 0
 
 @bottle.get('/')
 def index():
-		return """
-				<a href="https://github.com/sendwithus/battlesnake-python">
-						battlesnake-python
-				</a>
+	return """
+	 	<a href="https://github.com/sendwithus/battlesnake-python">
+			battlesnake-python
+		</a>
 		"""
 
 
 @bottle.post('/start')
 def start():
-		global width, height
-		data = bottle.request.json
-		width = data['width']
-		height = data['height']
+	global width, height
+	data = bottle.request.json
+	width = data['width']
+	height = data['height']
 
-		return json.dumps({
-				'name': 'aspkickers',
-				'color': '#00ffff',
-				'head_url': 'http://i.imgur.com/jhitWnu.png',
-				'taunt': 'There\'s a snake in my boot!'
-		})
+	return json.dumps({
+		'name': 'aspkickers',
+		'color': '#00ffff',
+		'head_url': 'http://i.imgur.com/jhitWnu.png',
+		'taunt': 'There\'s a snake in my boot!'
+	})
 
 
 @bottle.post('/move')
@@ -56,19 +56,21 @@ def move():
 		for coord in snake['coords']:
 			all_snakes.append(coord)
 
-    print all_snakes
+    	print all_snakes
      
     #look at tiles left, right, up down from head
     #for each tile, compare coords in tile to coords in all_snakes
     #if tile coords != all_snakes coords, move there
 
-	x = head[0]
+	x = oursnake[0]
 	y = head[1]
 	up = [x, y-1]
 	down = [x, y+1]
 	left = [x+1, y]
 	right = [x-1, y]   
   	
+
+
     #look at left tile
 	
     print all_snakes
@@ -83,9 +85,9 @@ def move():
 
 @bottle.post('/end')
 def end():
-		data = bottle.request.json
+	data = bottle.request.json
 
-		return json.dumps({})
+	return json.dumps({})
 
 
 # Expose WSGI app
