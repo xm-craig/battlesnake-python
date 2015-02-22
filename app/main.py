@@ -97,10 +97,14 @@ def move():
 	})
 
 def isWall(index):
+<<<<<<< HEAD
 	print index[0]
 	print index[1]
 	
 	if(index[0] < 0 or index[0] > width) or (index[1] < 0 or index[1] > height):
+=======
+	if(index[0] < 0 or index[0] >= width) or (index[1] < 0 or index[1] >= height):
+>>>>>>> origin/master
 		return True
 
 	return False
