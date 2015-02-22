@@ -35,22 +35,39 @@ def move():
     print data['food']
 
     oursnake_index = 0
+    oursnake_head = [,]
 
     for index in range(len(data['snakes'])):
       if(data['snakes'][index] == 'aspkickers'):
         oursnake_index = index
 
+    oursnake_head = data['snakes'][oursnake_index]['coords'][0]
 
     print data['snakes'][oursnake_index]['coords']
+    print oursnake_head
     print data['food']
 
 		all_snakes = []
 		
-
 		# for snake in snakes
 		for snake in data['snakes']:
 				for coord in snake['coords']:
 						all_snakes.append(coord)
+
+    print all_snakes
+   
+   #look at tiles left, right, up down from head
+   #for each tile, compare coords in tile to coords in all_snakes
+   #if tile coords != all_snakes coords, move there
+   
+   x = head[0]
+   y = head[1]
+   up = [x, y-1]
+   down = [x, y+1]
+   left = [x+1, y]
+   right = [x-1, y]
+   
+   #look at left tile
 
 		print all_snakes
 
