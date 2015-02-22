@@ -32,7 +32,7 @@ def move():
 
     oursnake_index = 0
 
-    for index in data['snakes']:
+    for index in range(len(data['snakes'])):
       if(data[index]['name'] == 'aspkickers'):
         oursnake_index = index
 
