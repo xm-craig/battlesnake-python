@@ -56,8 +56,6 @@ def move():
 	for snake in data['snakes']:
 		for coord in snake['coords']:
 			all_snakes.append(coord)
-
-		print all_snakes
 	 
 	#look at tiles left, right, up down from head
 	#for each tile, compare coords in tile to coords in all_snakes
@@ -82,6 +80,8 @@ def move():
 
 	our_square = 'up'
 
+
+
 	if up is not False and not isWall(up): 
 		our_square = 'up'
 	elif down is not False and not isWall(down):
@@ -97,9 +97,9 @@ def move():
 	})
 
 def isWall(index):
-	if(index[0] < 0 or index[0] >= width) or (index[1] < 0 or index[1] >= height):
+	global width, height
+	if(index[0] < 0 or index[0] == width) or (index[1] < 0 or index[1] == height):
 		return True
-
 	return False
 
 @bottle.post('/end')
