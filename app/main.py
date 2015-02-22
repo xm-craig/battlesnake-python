@@ -30,14 +30,14 @@ def move():
     print data['snakes']
     print data['food']
 
-    oursnake = 0
+    oursnake_index = 0
 
     for index in data['snakes']:
       if(snake[index]['name'] == 'aspkickers'):
-        oursnake = snake
+        oursnake_index = index
 
 
-    print data['snakes'][oursnake]['coords']
+    print data['snakes'][oursnake_index]['coords']
     print data['food']
 
     
