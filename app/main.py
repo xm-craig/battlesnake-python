@@ -6,25 +6,25 @@ height = 0
 
 @bottle.get('/')
 def index():
-		return """
-				<a href="https://github.com/sendwithus/battlesnake-python">
-						battlesnake-python
-				</a>
+	return """
+		<a href="https://github.com/sendwithus/battlesnake-python">
+		battlesnake-python
+		</a>
 		"""
 
 
 @bottle.post('/start')
 def start():
-		global width, height
-		data = bottle.request.json
-		width = data['width']
-		height = data['height']
+	global width, height
+	data = bottle.request.json
+	width = data['width']
+	height = data['height']
 
-		return json.dumps({
-				'name': 'aspkickers',
-				'color': '#00ffff',
-				'head_url': 'http://i.imgur.com/jhitWnu.png',
-				'taunt': 'There\'s a snake in my boot!'
+	return json.dumps({
+		'name': 'aspkickers',
+		'color': '#00ffff',
+		'head_url': 'http://i.imgur.com/jhitWnu.png',
+		'taunt': 'There\'s a snake in my boot!'
 		})
 
 
@@ -76,16 +76,16 @@ def move():
     return json.dumps({
 		'move': 'right',
 		'taunt': 'You\'re my favourite deputy!'
-	})
+		})
 
 #def isWall(point):
 
 
 @bottle.post('/end')
 def end():
-		data = bottle.request.json
-
-		return json.dumps({})
+	data = bottle.request.json
+	
+	return json.dumps({})
 
 
 # Expose WSGI app
