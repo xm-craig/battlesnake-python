@@ -32,8 +32,8 @@ def move():
 
     oursnake = 0
 
-    for snake in data['snakes']:
-      if(snake['name'] == 'aspkickers'):
+    for index in data['snakes']:
+      if(snake[index]['name'] == 'aspkickers'):
         oursnake = snake
 
 
