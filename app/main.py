@@ -7,7 +7,7 @@ height = 0
 @bottle.get('/')
 def index():
 	return """
-	 	<a href="https://github.com/sendwithus/battlesnake-python">
+		<a href="https://github.com/sendwithus/battlesnake-python">
 			battlesnake-python
 		</a>
 		"""
@@ -32,23 +32,23 @@ def start():
 def move():
 	data = bottle.request.json
 
-    print data['snakes']
-    print data['food']
+	print data['snakes']
+	print data['food']
 
-    oursnake_index = 0
-    oursnake_head = []
+	oursnake_index = 0
+	oursnake_head = []
 
-    for index in range(len(data['snakes'])):
-        if(data['snakes'][index] == 'aspkickers'):
-            oursnake_index = index
+	for index in range(len(data['snakes'])):
+		if(data['snakes'][index] == 'aspkickers'):
+			oursnake_index = index
 
-    oursnake_head = data['snakes'][oursnake_index]['coords'][0]
+	oursnake_head = data['snakes'][oursnake_index]['coords'][0]
 
-    print data['snakes'][oursnake_index]['coords']
-    print oursnake_head
-    print data['food']
+	print data['snakes'][oursnake_index]['coords']
+	print oursnake_head
+	print data['food']
 
-    # get the coordinates 
+	# get the coordinates 
 	all_snakes = []
 	
 	# for snake in snakes
@@ -56,11 +56,11 @@ def move():
 		for coord in snake['coords']:
 			all_snakes.append(coord)
 
-    	print all_snakes
-     
-    #look at tiles left, right, up down from head
-    #for each tile, compare coords in tile to coords in all_snakes
-    #if tile coords != all_snakes coords, move there
+		print all_snakes
+	 
+	#look at tiles left, right, up down from head
+	#for each tile, compare coords in tile to coords in all_snakes
+	#if tile coords != all_snakes coords, move there
 
 	x = oursnake[0]
 	y = head[1]
@@ -68,14 +68,14 @@ def move():
 	down = [x, y+1]
 	left = [x+1, y]
 	right = [x-1, y]   
-  	
-
-
-    #look at left tile
 	
-    print all_snakes
+
+
+	#look at left tile
+	
+	print all_snakes
 		
-    return json.dumps({
+	return json.dumps({
 		'move': 'right',
 		'taunt': 'You\'re my favourite deputy!'
 	})
