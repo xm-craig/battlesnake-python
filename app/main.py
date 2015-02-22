@@ -27,8 +27,8 @@ def start():
 def move():
     data = bottle.request.json
 
-    #print data['snakes']
-    #print data['food']
+    print data['snakes']
+    print data['food']
 
     oursnake = 0
 
