@@ -35,7 +35,7 @@ def move():
     print data['food']
 
     oursnake_index = 0
-    oursnake_head = [,]
+    oursnake_head = {}
 
     for index in range(len(data['snakes'])):
       if(data['snakes'][index] == 'aspkickers'):
