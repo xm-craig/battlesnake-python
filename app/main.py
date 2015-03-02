@@ -21,10 +21,10 @@ def start():
 	height = data['height']
 
 	return json.dumps({
-		'name': 'aspkickers',
+		'name': 'fusnake',
 		'color': '#00ffff',
-		'head_url': 'http://i.imgur.com/jhitWnu.png',
-		'taunt': 'There\'s a snake in my boot!'
+		'head_url': 'finger.png',
+		'taunt': 'Hi Jer!'
 	})
 
 
