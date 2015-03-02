@@ -27,6 +27,8 @@ Create new virtualenv (using virtualenvwrapper) and install dependencies:
 > pip install -r requirements.txt
 ```
 
+** Use your venv like this: https://devcenter.heroku.com/articles/getting-started-with-python#declare-app-dependencies **
+
 Run the server locally:
 ```
 > ./run

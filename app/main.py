@@ -22,8 +22,8 @@ def start():
 
 	return json.dumps({
 		'name': 'fusnake',
-		'color': '#00ffff',
-		'head_url': 'finger.png',
+		'color': '#00000000',
+		'head_url': 'https://raw.githubusercontent.com/jerath/battlesnake-python/master/app/finger.png',
 		'taunt': 'Hi Jer!'
 	})
 
@@ -40,7 +40,7 @@ def move():
 	oursnake_head = []
 
 	for index in range(len(data['snakes'])):
-		if(data['snakes'][index] == 'aspkickers'):
+		if(data['snakes'][index] == 'fusnake'):
 			oursnake_index = index
 
 	oursnake_head = data['snakes'][oursnake_index]['coords'][0]
@@ -93,7 +93,7 @@ def move():
 	
 	return json.dumps({
 		'move': our_square,
-		'taunt': 'You\'re my favourite deputy!'
+		'taunt': 'My anaconda don\'t.'
 	})
 
 def isWall(index):
