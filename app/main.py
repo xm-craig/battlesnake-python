@@ -1,112 +1,111 @@
 import bottle
 import json
+import math
 
 width = 0
 height = 0
+snake_name = 'fusnake'
 
 @bottle.get('/')
 def index():
-	return """
-		<a href="https://github.com/sendwithus/battlesnake-python">
-			battlesnake-python
-		</a>
-		"""
+  return """
+    <a href="https://github.com/sendwithus/battlesnake-python">
+      battlesnake-python
+    </a>
+    """
 
 
 @bottle.post('/start')
 def start():
-	global width, height
-	data = bottle.request.json
-	width = data['width']
-	height = data['height']
+  global width, height
+  data = bottle.request.json
+  width = data['width']
+  height = data['height']
 
-	return json.dumps({
-		'name': 'fusnake',
-		'color': '#00000000',
-		'head_url': 'https://raw.githubusercontent.com/jerath/battlesnake-python/master/app/finger.png',
-		'taunt': 'Hi Jer!'
-	})
+  return json.dumps({
+    'name': snake_name,
+    'color': '#00DDDDDD',
+    'head_url': 'https://raw.githubusercontent.com/jerath/battlesnake-python/master/app/finger.png',
+    'taunt': ':>'
+  })
 
 
 @bottle.post('/move')
 def move():
-	global width, height
-	data = bottle.request.json
 
-	print data['snakes']
-	print data['food']
+  data = bottle.request.json
 
-	oursnake_index = 0
-	oursnake_head = []
+  print data['food']
+  print data['snakes'] 
+  print '=================='
 
-	for index in range(len(data['snakes'])):
-		if(data['snakes'][index] == 'fusnake'):
-			oursnake_index = index
+  # find out about snake
+  for snake in data['snakes']:
+    if snake['name'] == snake_name:
+      head = snake['coords'][0]
+      break
+ 
+  board = data['board']
+  safe_squares = find_safe_square(board,head)
 
-	oursnake_head = data['snakes'][oursnake_index]['coords'][0]
+  if data['turn'] < 40:
+    # find closest food
+    food = data['food']
+    closest_food = find_closest_food(food, head)
 
-	print data['snakes'][oursnake_index]['coords']
-	print oursnake_head
-	print data['food']
+    # go to closest food
+    # ie. find my closest adjacent square and if it's safe, move there.
 
-	# get the coordinates 
-	all_snakes = []
-	
-	# for snake in snakes
-	for snake in data['snakes']:
-		for coord in snake['coords']:
-			all_snakes.append(coord)
-	 
-	#look at tiles left, right, up down from head
-	#for each tile, compare coords in tile to coords in all_snakes
-	#if tile coords != all_snakes coords, move there
-
-	x = oursnake_head[0]
-	y = oursnake_head[1]
-	up = [x, y-1]
-	down = [x, y+1]
-	left = [x+1, y]
-	right = [x-1, y]   
-	
-	#check if any of the tiles has a snake in it
-	if up in all_snakes:
-		up = False
-	elif down in all_snakes:
-		down = False
-	elif left in all_snakes:
-		left = False
-	elif right in all_snakes:
-		right = False
-
-	our_square = 'up'
+  # find other snake.
+  # else: 
+  #   print 'find other snake.'
 
 
+  return json.dumps({
+    'move': 'up',
+    'taunt': 'My anaconda don\'t.'
+  })
 
-	if up is not False and not isWall(up): 
-		our_square = 'up'
-	elif down is not False and not isWall(down):
-		our_square = 'down'
-	elif left is not False and not isWall(left):
-		our_square = 'left'
-	elif right is not False and not isWall(right):
-		our_square = 'right'
-	
-	return json.dumps({
-		'move': our_square,
-		'taunt': 'My anaconda don\'t.'
-	})
+def find_closest_food(food, head):
+  temp_closest = food[0]
+  temp_min_dist = pow(20,2)
+  for f in food:
+    a = abs(f[1] - head[1])
+    b = abs(f[0] - head[0])
+    distance = math.sqrt( pow(a, 2) + pow(b, 2))
+    print 'td', temp_min_dist
+    print 'd', distance
+    if distance < temp_min_dist:
+      temp_min_dist = distance
+      temp_closest = f
+  return temp_closest
 
-def isWall(index):
-	global width, height
-	if(index[0] < 0 or index[0] == width) or (index[1] < 0 or index[1] == height):
-		return True
-	return False
+def find_safe_square(board, head):
+  x = head[0]
+  y = head[1]
+
+  left = [x-1, y]
+  right = [y, x+1]
+  up = [x, y-1]
+  down = [x, y+1]
+
+  directions = [left, right, up, down]
+  
+  safe_sq = []
+
+  for direction in directions:
+    if direction[0] < (width - 1) and direction[0] >=0:
+      if direction[1] < (height - 1) and direction[1] >= 0:
+        if board[direction[0]][direction[1]]['snake'] is None:
+          safe_sq.append(direction)
+  return safe_sq
+
 
 @bottle.post('/end')
 def end():
-	data = bottle.request.json
+  data = bottle.request.json
 
-	return json.dumps({})
+  return json.dumps({})
 
 
 # Expose WSGI app
