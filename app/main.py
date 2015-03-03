@@ -46,23 +46,28 @@ def move():
       break
  
   board = data['board']
-  safe_squares = find_safe_square(board,head)
+  safe_squares = find_safe_square(board, head)
 
-  if data['turn'] < 40:
+  print safe_squares
+  # if data['turn'] < 40:
     # find closest food
-    food = data['food']
-    closest_food = find_closest_food(food, head)
+  
+  food = data['food']
+  closest_food = find_closest(food, head)
+  print 'closest_food', closest_food
+  # go to closest food
+  # ie. find my closest adjacent square and if it's safe, move there.
+  best_move = find_closest(safe_squares,closest_food)
+  print 'best_move', best_move
 
-    # go to closest food
-    # ie. find my closest adjacent square and if it's safe, move there.
-
-  # find other snake.
   # else: 
-  #   print 'find other snake.'
+  #   move = safe_sq[0]
 
+  best_move = convert_coord_to_move(best_move, head)
+  print 'best move', best_move
 
   return json.dumps({
-    'move': 'up',
+    'move': best_move,
     'taunt': 'My anaconda don\'t.'
   })
 
@@ -73,16 +78,28 @@ def find_closest_food(food, head):
     a = abs(f[1] - head[1])
     b = abs(f[0] - head[0])
     distance = math.sqrt( pow(a, 2) + pow(b, 2))
-    print 'td', temp_min_dist
-    print 'd', distance
     if distance < temp_min_dist:
       temp_min_dist = distance
       temp_closest = f
   return temp_closest
 
+def find_closest(choices, coord):
+  temp_closest = choices[0]
+  temp_min_dist = pow(width,2)
+  for c in choices:
+    a = abs(c[1] - coord[1])
+    b = abs(c[0] - coord[0])
+    distance = math.sqrt( pow(a, 2) + pow(b, 2))
+    if distance < temp_min_dist:
+      temp_min_dist = distance
+      temp_closest = c
+  return temp_closest
+
 def find_safe_square(board, head):
+  global width, height
   x = head[0]
   y = head[1]
+
 
   left = [x-1, y]
   right = [y, x+1]
@@ -100,6 +117,25 @@ def find_safe_square(board, head):
           safe_sq.append(direction)
   return safe_sq
 
+def convert_coord_to_move(best_move, head):
+  x = head[0]
+  y = head[1]
+
+  left = [x-1, y]
+  right = [y, x+1]
+  up = [x, y-1]
+  down = [x, y+1]
+
+  if best_move == left:
+    return 'left'
+  elif best_move == right:
+    return 'right'
+  elif best_move == up:
+    return 'up'
+  elif best_move == down:
+    return 'down'
+  else:
+    print 'you fucked up'
 
 @bottle.post('/end')
 def end():
