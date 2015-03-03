@@ -5,6 +5,9 @@ import math
 width = 0
 height = 0
 snake_name = 'thisisforjersnake'
+life = 100
+jer_snake = 'Swift Snake'
+taunt_count = 0
 
 @bottle.get('/')
 def index():
@@ -32,6 +35,7 @@ def start():
 
 @bottle.post('/move')
 def move():
+  global life
 
   data = bottle.request.json
 
@@ -40,38 +44,113 @@ def move():
   print '=================='
 
   snake_heads = []
+  jer_here = False
 
-  # find out about snake
+  smallest_snake_length = width * height
+  # find out about snake head
   for snake in data['snakes']:
     if snake['name'] == snake_name:
       head = snake['coords'][0]
-      break
- 
+      my_data = snake
+      my_length = len(snake['coords'])
+    # find jer
+    elif snake['name'] == jer_snake:
+      jer_data = snake
+      jer_length = len(snake['coords'])
+      jer_here = True
+    # find some other target snake
+    elif len(snake['coords']) < smallest_snake_length:
+      target_sname_name = snake['name']
+      target_snake_data = snake
+      target_snake_length = len(snake['coords'])
+
+  
   board = data['board']
-  safe_squares = find_safe_square(board, head)
-  print safe_squares
-
   food = data['food']
-  closest_food = find_closest(food, head)
-  print 'closest_food', closest_food
 
-  # another snake could be going for the same food
-  if not safe_food_square(board, closest_food):
-    print 'someone else is going for this food!'
-    safe_squares.remove(closest_food)
+  safe_squares = find_safe_square(board, head)
+  print 'safe_squares', safe_squares
 
-  # go to closest food
-  # ie. find my closest adjacent square and if it's safe, move there.
-  best_move = find_closest(safe_squares,closest_food)
+  
+  # if hungry, find food.
+  if life < 40:
+    closest_food = find_closest(food, head)
+
+    taunt_count = 0
+
+    # another snake could be going for the same food
+    if not safe_food_square(board, closest_food):
+      safe_squares.remove(closest_food)
+
+    best_move = find_closest(safe_squares,closest_food)
+
+  # if jer here and longer than jer, follow jer.
+  elif jer_here and my_length > jer_length:
+    jers_butt = find_follow_move(jer_data)
+    best_move = find_closest(safe_squares, jers_butt)
+
+    if taunt_count < 7:
+      taunt_count += 1
+    else: 
+      taunt_count = 1
+
+  # if jer not here, follow shortest snake if i'm bigger
+  elif my_length > target_snake_length:
+    print 'i\'m coming for you', target_sname_name
+    target_butt = find_follow_move(target_snake_data)
+    best_move = find_closest(safe_squares, target_butt)
+
+    if taunt_count < 7:
+      taunt_count += 1
+    else: 
+      taunt_count = 1
+
+  # chase my own tail.
+  else:
+    closest_food = find_closest(food, head)
+
+    taunt_count = 0
+
+    # another snake could be going for the same food
+    if not safe_food_square(board, closest_food):
+      safe_squares.remove(closest_food)
+
+    best_move = find_closest(safe_squares,closest_food)
+
+
   print 'best_move', best_move
+
+  # Keep track of how hungry the snake is.
+  if best_move in food:
+    life = 100
+  else: 
+    life = life - 1
 
   # convert best move from coordinates into a string
   best_move = convert_coord_to_move(best_move, head)
   print 'best move', best_move
 
+
+  if taunt_count == 1:
+    taunt = 'MY ANACONDA'
+  elif taunt_count == 2:
+    taunt = 'DON\'T'
+  elif taunt_count == 3:
+    taunt = 'WANT' 
+  elif taunt_count == 4:
+    taunt = 'NONE' 
+  elif taunt_count == 5:
+    taunt = 'UNLESS YOU GOT' 
+  elif taunt_count == 6:
+    taunt = 'BUNS'
+  elif taunt_count == 6:
+    taunt = 'HUN'
+  else: 
+    taunt = 'My anaconda don\'t'
+
   return json.dumps({
     'move': best_move,
-    'taunt': 'My anaconda don\'t.'
+    'taunt': taunt
   })
 
 def find_closest(choices, coord):
@@ -126,6 +205,11 @@ def safe_food_square(board, food):
         if board[direction[0]][direction[1]]['state'] is 'head':
           safe_sq = False
   return safe_sq
+
+def find_follow_move(snake):
+  # find snake butt
+  snake_butt = snake['coords'][len(snake['coords'])-1]
+  return snake_butt
 
 def convert_coord_to_move(best_move, head):
   x = head[0]
