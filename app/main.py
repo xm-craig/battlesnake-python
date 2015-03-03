@@ -83,7 +83,7 @@ def move():
     best_move = find_closest(safe_squares,closest_food)
 
   # if jer not here, follow shortest snake if i'm bigger
-  elif my_length > target_snake_length:
+  else:
     print 'i\'m coming for you', target_snake_name
     snake_butt, snake_head = find_snake_parts(target_snake_data)
 
@@ -98,17 +98,6 @@ def move():
       taunt_count += 1
     else: 
       taunt_count = 1
-
-  # eat and be merry
-  else:
-    closest_food = find_closest(food, head)
-    taunt_count = 0
-
-    # another snake could be going for the same food
-    if not adjacent_square_safe(board, closest_food, 'head'):
-      safe_squares.remove(closest_food)
-
-    best_move = find_closest(safe_squares,closest_food)
 
 
   print 'best_move', best_move
