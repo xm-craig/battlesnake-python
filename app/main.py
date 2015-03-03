@@ -4,7 +4,7 @@ import math
 
 width = 0
 height = 0
-snake_name = 'fusnake'
+snake_name = 'thisisforjersnake'
 
 @bottle.get('/')
 def index():
@@ -39,6 +39,8 @@ def move():
   print data['snakes'] 
   print '=================='
 
+  snake_heads = []
+
   # find out about snake
   for snake in data['snakes']:
     if snake['name'] == snake_name:
@@ -47,22 +49,23 @@ def move():
  
   board = data['board']
   safe_squares = find_safe_square(board, head)
-
   print safe_squares
-  # if data['turn'] < 40:
-    # find closest food
-  
+
   food = data['food']
   closest_food = find_closest(food, head)
   print 'closest_food', closest_food
+
+  # another snake could be going for the same food
+  if not safe_food_square(board, closest_food):
+    print 'someone else is going for this food!'
+    safe_squares.remove(closest_food)
+
   # go to closest food
   # ie. find my closest adjacent square and if it's safe, move there.
   best_move = find_closest(safe_squares,closest_food)
   print 'best_move', best_move
 
-  # else: 
-  #   move = safe_sq[0]
-
+  # convert best move from coordinates into a string
   best_move = convert_coord_to_move(best_move, head)
   print 'best move', best_move
 
@@ -70,18 +73,6 @@ def move():
     'move': best_move,
     'taunt': 'My anaconda don\'t.'
   })
-
-def find_closest_food(food, head):
-  temp_closest = food[0]
-  temp_min_dist = pow(20,2)
-  for f in food:
-    a = abs(f[1] - head[1])
-    b = abs(f[0] - head[0])
-    distance = math.sqrt( pow(a, 2) + pow(b, 2))
-    if distance < temp_min_dist:
-      temp_min_dist = distance
-      temp_closest = f
-  return temp_closest
 
 def find_closest(choices, coord):
   temp_closest = choices[0]
@@ -100,9 +91,8 @@ def find_safe_square(board, head):
   x = head[0]
   y = head[1]
 
-
   left = [x-1, y]
-  right = [y, x+1]
+  right = [x+1, y]
   up = [x, y-1]
   down = [x, y+1]
 
@@ -117,12 +107,32 @@ def find_safe_square(board, head):
           safe_sq.append(direction)
   return safe_sq
 
+def safe_food_square(board, food):
+  x = food[0]
+  y = food[1]
+
+  left = [x-1, y]
+  right = [x+1, y]
+  up = [x, y-1]
+  down = [x, y+1]
+
+  directions = [left, right, up, down]
+  
+  safe_sq = True
+
+  for direction in directions:
+    if direction[0] < (width - 1) and direction[0] >=0:
+      if direction[1] < (height - 1) and direction[1] >= 0:
+        if board[direction[0]][direction[1]]['state'] is 'head':
+          safe_sq = False
+  return safe_sq
+
 def convert_coord_to_move(best_move, head):
   x = head[0]
   y = head[1]
 
   left = [x-1, y]
-  right = [y, x+1]
+  right = [x+1, y]
   up = [x, y-1]
   down = [x, y+1]
 
