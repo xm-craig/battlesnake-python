@@ -35,7 +35,7 @@ def start():
 
 @bottle.post('/move')
 def move():
-  global life
+  global life, taunt_count
 
   data = bottle.request.json
 
@@ -47,7 +47,8 @@ def move():
   jer_here = False
 
   smallest_snake_length = width * height
-  # find out about snake head
+
+  # get data for my snake, jer's snake, target snake
   for snake in data['snakes']:
     if snake['name'] == snake_name:
       head = snake['coords'][0]
@@ -60,7 +61,7 @@ def move():
       jer_here = True
     # find some other target snake
     elif len(snake['coords']) < smallest_snake_length:
-      target_sname_name = snake['name']
+      target_snake_name = snake['name']
       target_snake_data = snake
       target_snake_length = len(snake['coords'])
 
@@ -70,49 +71,41 @@ def move():
 
   safe_squares = find_safe_square(board, head)
   print 'safe_squares', safe_squares
-
   
   # if hungry, find food.
   if life < 40:
     closest_food = find_closest(food, head)
-
     taunt_count = 0
-
     # another snake could be going for the same food
-    if not safe_food_square(board, closest_food):
+    if not adjacent_square_safe(board, closest_food, 'head'):
       safe_squares.remove(closest_food)
 
     best_move = find_closest(safe_squares,closest_food)
 
-  # if jer here and longer than jer, follow jer.
-  elif jer_here and my_length > jer_length:
-    jers_butt = find_follow_move(jer_data)
-    best_move = find_closest(safe_squares, jers_butt)
-
-    if taunt_count < 7:
-      taunt_count += 1
-    else: 
-      taunt_count = 1
-
   # if jer not here, follow shortest snake if i'm bigger
   elif my_length > target_snake_length:
-    print 'i\'m coming for you', target_sname_name
-    target_butt = find_follow_move(target_snake_data)
-    best_move = find_closest(safe_squares, target_butt)
+    print 'i\'m coming for you', target_snake_name
+    snake_butt, snake_head = find_snake_parts(target_snake_data)
 
-    if taunt_count < 7:
+    if square_adjacent(head, snake_butt):  
+      # if snake is not about to eat, their butt is a safe place to be
+      if adjacent_square_safe(board = board, point = snake_head, state = 'food'):
+        safe_squares.append(snake_butt)
+    
+    best_move = find_closest(safe_squares, snake_butt)
+
+    if taunt_count < 8:
       taunt_count += 1
     else: 
       taunt_count = 1
 
-  # chase my own tail.
+  # eat and be merry
   else:
     closest_food = find_closest(food, head)
-
     taunt_count = 0
 
     # another snake could be going for the same food
-    if not safe_food_square(board, closest_food):
+    if not adjacent_square_safe(board, closest_food, 'head'):
       safe_squares.remove(closest_food)
 
     best_move = find_closest(safe_squares,closest_food)
@@ -130,28 +123,30 @@ def move():
   best_move = convert_coord_to_move(best_move, head)
   print 'best move', best_move
 
+  taunt = taunt_gen()
 
-  if taunt_count == 1:
-    taunt = 'MY ANACONDA'
-  elif taunt_count == 2:
-    taunt = 'DON\'T'
-  elif taunt_count == 3:
-    taunt = 'WANT' 
-  elif taunt_count == 4:
-    taunt = 'NONE' 
-  elif taunt_count == 5:
-    taunt = 'UNLESS YOU GOT' 
-  elif taunt_count == 6:
-    taunt = 'BUNS'
-  elif taunt_count == 6:
-    taunt = 'HUN'
-  else: 
-    taunt = 'My anaconda don\'t'
 
   return json.dumps({
     'move': best_move,
     'taunt': taunt
   })
+
+
+def square_adjacent(head, snake_butt):
+  adj = False
+
+  x = head[0]
+  y = head[1]
+
+  left = [x-1, y]
+  right = [x+1, y]
+  up = [x, y-1]
+  down = [x, y+1]
+  
+  if snake_butt == left or snake_butt == right or snake_butt == up or snake_butt == down:
+    adj = True
+
+  return adj
 
 def find_closest(choices, coord):
   temp_closest = choices[0]
@@ -164,6 +159,26 @@ def find_closest(choices, coord):
       temp_min_dist = distance
       temp_closest = c
   return temp_closest
+
+def adjacent_square_safe(board, point, state):
+  x = point[0]
+  y = point[1]
+
+  left = [x-1, y]
+  right = [x+1, y]
+  up = [x, y-1]
+  down = [x, y+1]
+
+  directions = [left, right, up, down]
+  
+  safe_sq = True
+
+  for direction in directions:
+    if direction[0] < (width - 1) and direction[0] >=0:
+      if direction[1] < (height - 1) and direction[1] >= 0:
+        if board[direction[0]][direction[1]]['state'] is state:
+          safe_sq = False
+  return safe_sq
 
 def find_safe_square(board, head):
   global width, height
@@ -186,30 +201,31 @@ def find_safe_square(board, head):
           safe_sq.append(direction)
   return safe_sq
 
-def safe_food_square(board, food):
-  x = food[0]
-  y = food[1]
-
-  left = [x-1, y]
-  right = [x+1, y]
-  up = [x, y-1]
-  down = [x, y+1]
-
-  directions = [left, right, up, down]
-  
-  safe_sq = True
-
-  for direction in directions:
-    if direction[0] < (width - 1) and direction[0] >=0:
-      if direction[1] < (height - 1) and direction[1] >= 0:
-        if board[direction[0]][direction[1]]['state'] is 'head':
-          safe_sq = False
-  return safe_sq
-
-def find_follow_move(snake):
-  # find snake butt
+def find_snake_parts(snake):
   snake_butt = snake['coords'][len(snake['coords'])-1]
-  return snake_butt
+  snake_head = snake['coords'][0]
+  return snake_butt, snake_head
+
+
+def taunt_gen():
+  if taunt_count == 1:
+    return 'MY ANACONDA'
+  elif taunt_count == 2:
+    return 'DON\'T'
+  elif taunt_count == 3:
+    return 'WANT' 
+  elif taunt_count == 4:
+    return 'NONE' 
+  elif taunt_count == 5:
+    return 'UNLESS YOU' 
+  elif taunt_count == 6:
+    return 'GOT'
+  elif taunt_count == 7:
+    return 'BUNS'
+  elif taunt_count == 8:
+    return 'HUN'
+  else: 
+    return 'My anaconda don\'t'
 
 def convert_coord_to_move(best_move, head):
   x = head[0]
@@ -230,6 +246,7 @@ def convert_coord_to_move(best_move, head):
     return 'down'
   else:
     print 'you fucked up'
+
 
 @bottle.post('/end')
 def end():
