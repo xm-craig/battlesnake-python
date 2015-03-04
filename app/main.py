@@ -44,36 +44,34 @@ def move():
   print '=================='
 
   snake_heads = []
-  jer_here = False
+  snake_butts = []
 
-  smallest_snake_length = width * height
-
-  # get data for my snake, jer's snake, target snake
+  # get data for my snake, target snake
   for snake in data['snakes']:
     if snake['name'] == snake_name:
       head = snake['coords'][0]
       my_data = snake
       my_length = len(snake['coords'])
-    # find jer
-    elif snake['name'] == jer_snake:
-      jer_data = snake
-      jer_length = len(snake['coords'])
-      jer_here = True
-    # find some other target snake
-    elif len(snake['coords']) < smallest_snake_length:
-      target_snake_name = snake['name']
-      target_snake_data = snake
-      target_snake_length = len(snake['coords'])
+    
+  # find the snake_butts
+  for snake in data['snakes']:
+    if snake['name'] != snake_name:
+      snake_butt, snake_head = find_snake_parts(snake)
+      # don't append if snake is adjacent and growing
+      if square_adjacent(snake_butt, head) and snake_butt == snake['coords'][len(snake['coords'])-2]:
+        print 'WATCH OUT IT\'S GROWING!!!'
+      else:
+        print 'weve got a new butt'
+        snake_butts.append(snake_butt)
 
-  
   board = data['board']
   food = data['food']
 
   safe_squares = find_safe_square(board, head)
   print 'safe_squares', safe_squares
   
-  # if hungry, find food.
-  if life < 40:
+  # if hungry or snake i'm following is growing, find food.
+  if life < 40 or snake_butts == []:
     closest_food = find_closest(food, head)
     taunt_count = 0
     # another snake could be going for the same food
@@ -82,15 +80,11 @@ def move():
 
     best_move = find_closest(safe_squares,closest_food)
 
-  # if jer not here, follow shortest snake if i'm bigger
   else:
-    print 'i\'m coming for you', target_snake_name
-    snake_butt, snake_head = find_snake_parts(target_snake_data)
+    closest_butt = find_closest(snake_butts, head)
 
-    if square_adjacent(head, snake_butt):  
-      # if snake is not about to eat, their butt is a safe place to be
-      if adjacent_square_safe(board = board, point = snake_head, state = 'food'):
-        safe_squares.append(snake_butt)
+    if square_adjacent(head, snake_butt) and snake_butt in snake_butts:  
+      safe_squares.append(snake_butt)
     
     best_move = find_closest(safe_squares, snake_butt)
 
@@ -113,7 +107,6 @@ def move():
   print 'best move', best_move
 
   taunt = taunt_gen()
-
 
   return json.dumps({
     'move': best_move,
