@@ -39,7 +39,7 @@ def move():
   data = bottle.request.json
 
   print data['food']
-  print data['snakes'] 
+  print data['snakes']
   print '=================='
 
   snake_butts = []
@@ -53,10 +53,10 @@ def move():
       my_length = len(snake['coords'])
       if len(snake['coords']) == 3 or (data['turn'] - snake['last_eaten'] > 60):
         hungry = True
-  
+
   final_countdown = False
   # find the snake_butts
-  if len(data['snakes']) > 2: 
+  if len(data['snakes']) > 2:
     for snake in data['snakes']:
       # if snake isn't me
       if snake['name'] != snake_name:
@@ -75,7 +75,7 @@ def move():
 
   safe_squares = find_safe_square(board, head)
   print 'safe_squares', safe_squares
-  
+
 
   # if hungry or snake i'm following is growing, find food.
   if hungry or snake_butts == []:
@@ -93,14 +93,14 @@ def move():
     print 'snake_butts', snake_butts
     print 'closest', closest_butt
 
-    if square_adjacent(head, snake_butt) and snake_butt in snake_butts:  
+    if square_adjacent(head, snake_butt) and snake_butt in snake_butts:
       safe_squares.append(snake_butt)
-    
+
     best_move = find_closest(safe_squares, snake_butt)
 
     if taunt_count < 8:
       taunt_count += 1
-    else: 
+    else:
       taunt_count = 1
 
 
@@ -128,7 +128,7 @@ def square_adjacent(head, snake_butt):
   right = [x+1, y]
   up = [x, y-1]
   down = [x, y+1]
-  
+
   if snake_butt == left or snake_butt == right or snake_butt == up or snake_butt == down:
     adj = True
 
@@ -156,7 +156,7 @@ def adjacent_square_safe(board, point):
   down = [x, y+1]
 
   directions = [left, right, up, down]
-  
+
   safe_sq = True
 
   for direction in directions:
@@ -177,7 +177,7 @@ def find_safe_square(board, head):
   down = [x, y+1]
 
   directions = [left, right, up, down]
-  
+
   safe_sq = []
 
   for direction in directions:
@@ -199,18 +199,18 @@ def taunt_gen():
   elif taunt_count == 2:
     return 'DON\'T'
   elif taunt_count == 3:
-    return 'WANT' 
+    return 'WANT'
   elif taunt_count == 4:
-    return 'NONE' 
+    return 'NONE'
   elif taunt_count == 5:
-    return 'UNLESS YOU' 
+    return 'UNLESS YOU'
   elif taunt_count == 6:
     return 'GOT'
   elif taunt_count == 7:
     return 'BUNS'
   elif taunt_count == 8:
     return 'HUN'
-  else: 
+  else:
     return 'My anaconda don\'t'
 
 def convert_coord_to_move(best_move, head):
