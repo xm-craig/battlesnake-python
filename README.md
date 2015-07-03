@@ -1,4 +1,19 @@
-## battlesnake-python
+## Overview
+This was a sweet hackathon put on by sendwithus in Victoria, BC.
+It is based on the snake arcade game. 
+
+Objective:
+1. Eat food.
+1. Don't accidentally kill yourself.
+1. Kill other snakes.
+
+Our original submission didn't fare too well in the tournament - we scooted right off the board! It was a thrill to watch the competition, but that was a disappointing loss.
+
+Bitten by the challenge, I played with it at home and built my own strategy. Currently, this snake teasingly targets the nearest snake and follows it very closely... carefully dodging when the snake is growing and prioritizing food when it starts to get low on life.
+
+I would have liked to implement some graph searching algorithms that allows the snake to see further into the future and optimize for every move. Also, it would have been a big advantage to be able to target snakes and intercept their path with my body or lock them into a corner. Maybe next year!
+
+## Offical Docs
 
 A simple [BattleSnake AI](http://battlesnake.io) written in Python. Available live at [battlesnake-python.herokuapp.com](http://battlesnake-python.herokuapp.com).
 
