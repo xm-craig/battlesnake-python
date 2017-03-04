@@ -49,6 +49,7 @@ def move():
   hungry = False
 
   # get data for my snake, target snake
+  # TODO: update for first snake in array that's not me
   for snake in data['snakes']:
     if snake['name'] == snake_name:
       head = snake['coords'][0]
@@ -58,6 +59,7 @@ def move():
         hungry = True
 
   final_countdown = False
+
   # find the snake_butts
   if len(data['snakes']) > 2:
     for snake in data['snakes']:
@@ -73,10 +75,9 @@ def move():
     else:
       final_countdown = True
 
-  board = data['board']
   food = data['food']
 
-  safe_squares = find_safe_square(board, head)
+  safe_squares = find_safe_square(head)
   print 'safe_squares', safe_squares
 
 
@@ -86,7 +87,7 @@ def move():
     closest_food = find_closest(food, head)
     taunt_count = 0
     # another snake could be going for the same food
-    if not adjacent_square_safe(board, closest_food):
+    if not adjacent_square_safe(closest_food):
       safe_squares.remove(closest_food)
 
     best_move = find_closest(safe_squares,closest_food)
@@ -149,7 +150,7 @@ def find_closest(choices, coord):
       temp_closest = c
   return temp_closest
 
-def adjacent_square_safe(board, point):
+def adjacent_square_safe(point):
   x = point[0]
   y = point[1]
 
@@ -165,11 +166,11 @@ def adjacent_square_safe(board, point):
   for direction in directions:
     if direction[0] < (width - 1) and direction[0] >=0:
       if direction[1] < (height - 1) and direction[1] >= 0:
-        if board[direction[0]][direction[1]]['state'] is 'head':
+        if !square_empty(direction[0], direction[1]):
           safe_sq = False
   return safe_sq
 
-def find_safe_square(board, head):
+def find_safe_square(head):
   global width, height
   x = head[0]
   y = head[1]
@@ -186,7 +187,7 @@ def find_safe_square(board, head):
   for direction in directions:
     if direction[0] < (width - 1) and direction[0] >=0:
       if direction[1] < (height - 1) and direction[1] >= 0:
-        if board[direction[0]][direction[1]]['snake'] is None:
+        if square_empty(direction[0], direction[1]):
           safe_sq.append(direction)
   return safe_sq
 
@@ -236,6 +237,17 @@ def convert_coord_to_move(best_move, head):
   else:
     print 'you fucked up'
 
+def square_empty(x_coord, y_coord):
+  empty = True
+  square = [x_coord, y_coord]
+
+  for snake in data['snakes']:
+    if square in snake:
+      empty = False 
+      print 'Square empty'
+      return empty
+  
+  return empty
 
 @bottle.post('/end')
 def end():
