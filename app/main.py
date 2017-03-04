@@ -25,12 +25,15 @@ def start():
   height = data['height']
 
   return json.dumps({
-    'name': snake_name,
-    'color': '#00DDDDDD',
-    'head_url': 'https://raw.githubusercontent.com/jerath/battlesnake-python/master/app/finger.png',
-    'taunt': ':>'
-  })
-
+    "color": "#FF0000",
+    "secondary_color": "#00FF00",
+    "head_url": "http://placecage.com/c/100/100",
+    "name": "Cage Snake",
+    "taunt": "OH GOD NOT THE BEES"
+    "head_type": "pixel",
+    "tail_type": "pixel"
+    }
+  )
 
 @bottle.post('/move')
 def move():
