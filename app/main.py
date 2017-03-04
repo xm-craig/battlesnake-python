@@ -90,10 +90,13 @@ def move():
   if hungry or snake_butts == []:
     print 'im hungry'
     closest_food = find_closest(food, head)
+    print 'CLOSEST FOOD'
+    print closest_food
     taunt_count = 0
     
     # another snake could be going for the same food
     if not adjacent_square_safe(closest_food, data):
+      print 'ADJACENT SQUARE NOT SAFE'
       if closest_food in safe_squares:
         safe_squares.remove(closest_food)
 
@@ -174,6 +177,7 @@ def adjacent_square_safe(point, data):
     if direction[0] < (width - 1) and direction[0] >=0:
       if direction[1] < (height - 1) and direction[1] >= 0:
         if not square_empty(direction, data):
+          print 'SQUARE NOT EMPTY!!'
           safe_sq = False
   return safe_sq
 
