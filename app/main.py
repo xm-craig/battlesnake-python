@@ -51,17 +51,14 @@ def move():
   print '=================='
 
   snake_butts = []
-  hungry = False
 
   # get data for my snake, target snake
-  # TODO: update for first snake in array that's not me ?
-  for snake in data['snakes']:
-    if snake['name'] == snake_name:
-      head = snake['coords'][0]
-      my_data = snake
-      my_length = len(snake['coords'])
-      if len(snake['coords']) == 3 or (data['turn'] - snake['last_eaten'] > 60):
-        hungry = True
+  my_snake = next(x for x in data['snakes'] if x['name'] == snake_name)
+
+  head = my_snake['coords'][0]
+  my_data = my_snake
+  my_length = len(my_snake['coords'])  
+  hungry = len(my_snake['coords']) == 3 or (my_snake['health_points'] < 60)
 
   final_countdown = False
 
