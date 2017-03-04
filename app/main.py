@@ -7,6 +7,7 @@ height = 0
 snake_name = 'nake'
 jer_snake = 'Swift Snake'
 taunt_count = 0
+head = [0,0]
 
 @bottle.get('/')
 def index():
