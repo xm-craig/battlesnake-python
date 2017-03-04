@@ -49,7 +49,7 @@ def move():
   hungry = False
 
   # get data for my snake, target snake
-  # TODO: update for first snake in array that's not me
+  # TODO: update for first snake in array that's not me ?
   for snake in data['snakes']:
     if snake['name'] == snake_name:
       head = snake['coords'][0]
