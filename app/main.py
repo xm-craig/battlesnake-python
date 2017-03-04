@@ -41,6 +41,9 @@ def start():
 def move():
   global taunt_count, head
 
+  print 'WIDTH' + str(width)
+  print 'HEIGHT' + str(height)
+
   data = bottle.request.json
 
   print data
@@ -80,6 +83,8 @@ def move():
 
   food = data['food']
 
+  print 'HEAD IS'
+  print head
   safe_squares = find_safe_square(head, data)
   print 'safe_squares', safe_squares
 
