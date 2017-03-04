@@ -7,7 +7,7 @@ height = 0
 snake_name = 'nake'
 jer_snake = 'Swift Snake'
 taunt_count = 0
-head = [0,0]
+head = []
 
 @bottle.get('/')
 def index():
@@ -39,7 +39,7 @@ def start():
 
 @bottle.post('/move')
 def move():
-  global taunt_count
+  global taunt_count, head
 
   data = bottle.request.json
 
