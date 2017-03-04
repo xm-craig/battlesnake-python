@@ -167,7 +167,7 @@ def adjacent_square_safe(point):
   for direction in directions:
     if direction[0] < (width - 1) and direction[0] >=0:
       if direction[1] < (height - 1) and direction[1] >= 0:
-        if !square_empty(direction[0], direction[1]):
+        if not square_empty(direction[0], direction[1]):
           safe_sq = False
   return safe_sq
 
@@ -249,6 +249,7 @@ def square_empty(x_coord, y_coord):
       return empty
   
   return empty
+
 
 @bottle.post('/end')
 def end():
