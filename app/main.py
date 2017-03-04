@@ -4,7 +4,7 @@ import math
 
 width = 0
 height = 0
-snake_name = 'thisisforjersnake'
+snake_name = 'nake'
 jer_snake = 'Swift Snake'
 taunt_count = 0
 
@@ -42,7 +42,7 @@ def move():
 
   data = bottle.request.json
 
-  print data['food']
+  print data
   print data['snakes']
   print '=================='
 
@@ -76,9 +76,10 @@ def move():
     else:
       final_countdown = True
 
+
   food = data['food']
 
-  safe_squares = find_safe_square(head)
+  safe_squares = find_safe_square(head, data)
   print 'safe_squares', safe_squares
 
 
@@ -87,11 +88,13 @@ def move():
     print 'im hungry'
     closest_food = find_closest(food, head)
     taunt_count = 0
+    
     # another snake could be going for the same food
-    if not adjacent_square_safe(closest_food):
-      safe_squares.remove(closest_food)
+    if not adjacent_square_safe(closest_food, data):
+      if closest_food in safe_squares:
+        safe_squares.remove(closest_food)
 
-    best_move = find_closest(safe_squares,closest_food)
+    best_move = find_closest(safe_squares, closest_food)
   # otherwise follow a snake
   else:
     closest_butt = find_closest(snake_butts, head)
@@ -151,7 +154,7 @@ def find_closest(choices, coord):
       temp_closest = c
   return temp_closest
 
-def adjacent_square_safe(point):
+def adjacent_square_safe(point, data):
   x = point[0]
   y = point[1]
 
@@ -165,13 +168,14 @@ def adjacent_square_safe(point):
   safe_sq = True
 
   for direction in directions:
-    if direction[0] < (width - 1) and direction[0] >=0:
-      if direction[1] < (height - 1) and direction[1] >= 0:
-        if not square_empty(direction[0], direction[1]):
+    if direction[0] < (width) and direction[0] >=0:
+      if direction[1] < (height) and direction[1] >= 0:
+        if not square_empty(direction, data):
           safe_sq = False
   return safe_sq
 
-def find_safe_square(head):
+def find_safe_square(head, data):
+
   global width, height
   x = head[0]
   y = head[1]
@@ -186,9 +190,10 @@ def find_safe_square(head):
   safe_sq = []
 
   for direction in directions:
-    if direction[0] < (width - 1) and direction[0] >=0:
-      if direction[1] < (height - 1) and direction[1] >= 0:
-        if square_empty(direction[0], direction[1]):
+    if direction[0] < (width) and direction[0] >= 0:
+      if direction[1] < (height) and direction[1] >= 0:
+        if square_empty(direction, data):
+          print 'square empty!!'
           safe_sq.append(direction)
   return safe_sq
 
@@ -238,12 +243,15 @@ def convert_coord_to_move(best_move, head):
   else:
     print 'you fucked up'
 
-def square_empty(x_coord, y_coord):
+def square_empty(square, data):
   empty = True
-  square = [x_coord, y_coord]
-
+  print 'square_empty'
   for snake in data['snakes']:
-    if square in snake:
+    print 'SNAKE IS'
+    print square
+    print snake
+    if square in snake['coords']:
+
       empty = False 
       print 'Square empty'
       return empty
