@@ -29,7 +29,7 @@ def start():
     "color": "#FF0000",
     "secondary_color": "#00FF00",
     "head_url": "http://placecage.com/c/100/100",
-    "name": "Cage Snake",
+    "name": "nake",
     "taunt": "OH GOD NOT THE BEES",
     "head_type": "fang",
     "tail_type": "pixel"
