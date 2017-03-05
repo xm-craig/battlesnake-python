@@ -61,6 +61,8 @@ def move():
   my_data = my_snake
   my_length = len(my_snake['coords'])  
   hungry = len(my_snake['coords']) == 3 or (my_snake['health_points'] < 60)
+  print 'HUNGRY IS ' + str(hungry)
+  print 'HEALTHPOINTS ' + str(my_snake['health_points']) 
 
   final_countdown = False
 
@@ -90,6 +92,7 @@ def move():
 
   # if hungry or snake i'm following is growing, find food.
   if hungry or snake_butts == []:
+    print 'SNAKE BUTS IS ' + str(snake_butts)
     print 'im hungry'
     closest_food = find_closest(food, head)
     print 'CLOSEST FOOD'
@@ -210,10 +213,10 @@ def find_safe_square(head, data):
   return safe_sq
 
 def find_snake_parts(snake):
-  snake_butt = snake['coords'][len(snake['coords'])-1]
+  snake_butt = snake['coords'][-1]
   snake_head = snake['coords'][0]
+  print 'FINDING SNAKE PARTS: ' + str(snake_butt) + str(snake_head)
   return snake_butt, snake_head
-
 
 def taunt_gen():
   if taunt_count == 1:
