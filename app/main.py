@@ -7,7 +7,6 @@ print 'STARTING UP'
 width = 0
 height = 0
 snake_name = 'nake'
-jer_snake = 'Swift Snake'
 taunt_count = 0
 head = []
 
@@ -19,7 +18,6 @@ def index():
     </a>
     """
 
-
 @bottle.post('/start')
 def start():
   global width, height
@@ -28,16 +26,15 @@ def start():
   height = data['height']
 
   return json.dumps({
-    "color": "#FF0000",
-    "secondary_color": "#00FF00",
-    "head_url": "http://placecage.com/c/100/100",
+    "color": "#ff59eb",
+    "secondary_color": "#00D5FB",
+    "head_url": "http://www.giphy.com/gifs/3o7btW7vWyqksA9x4c",
     "name": "nake",
     "taunt": "OH GOD NOT THE BEES",
-    "head_type": "fang",
-    "tail_type": "pixel"
+    "head_type": "tongue",
+    "tail_type": "freckled"
     }
   )
-
 
 @bottle.post('/move')
 def move():
