@@ -66,7 +66,7 @@ def move():
 
   # find the snake_butts
   # if there are more than two snakes 
-  if len(data['snakes']) > 2 || len(my_snake['coords']) > 15:
+  if len(data['snakes']) > 2 or len(my_snake['coords']) > 15:
     # follow a snake
     for snake in data['snakes']:
       # if snake isn't me
