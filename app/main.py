@@ -176,8 +176,8 @@ def adjacent_square_safe(point, data):
   safe_sq = True
 
   for direction in directions:
-    if direction[0] < (width -1 ) and direction[0] >=0:
-      if direction[1] < (height - 1) and direction[1] >= 0:
+    if direction[0] < (width) and direction[0] >=0:
+      if direction[1] < (height) and direction[1] >= 0:
         if not square_empty(direction, data):
           print 'SQUARE NOT EMPTY!!'
           safe_sq = False
@@ -199,8 +199,8 @@ def find_safe_square(head, data):
   safe_sq = []
 
   for direction in directions:
-    if direction[0] < (width - 1) and direction[0] >= 0:
-      if direction[1] < (height - 1) and direction[1] >= 0:
+    if direction[0] < (width) and direction[0] >= 0:
+      if direction[1] < (height) and direction[1] >= 0:
         if square_empty(direction, data):
           safe_sq.append(direction)
 
