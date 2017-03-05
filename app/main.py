@@ -95,10 +95,10 @@ def move():
     taunt_count = 0
     
     # another snake could be going for the same food
-    if not adjacent_square_safe(closest_food, data):
-      print 'ADJACENT SQUARE NOT SAFE'
-      if closest_food in safe_squares:
-        safe_squares.remove(closest_food)
+    # if not adjacent_square_safe(closest_food, data):
+    #   print 'ADJACENT SQUARE NOT SAFE'
+    #   if closest_food in safe_squares:
+    #     safe_squares.remove(closest_food)
 
     best_move = find_closest(safe_squares, closest_food)
   # otherwise follow a snake
