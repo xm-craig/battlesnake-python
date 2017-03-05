@@ -132,9 +132,9 @@ def move():
 
   taunt = taunt_gen()
   
-  if len(data['snakes'] > 4):
-    best_move = get_next_circle_move
-    print 'BEST MOVE: ' + best_move
+  # if len(data['snakes'] > 4):
+  #   best_move = get_next_circle_move
+  #   print 'BEST MOVE: ' + best_move
 
   return json.dumps({
     'move': best_move,
