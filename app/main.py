@@ -28,9 +28,9 @@ def start():
   return json.dumps({
     "color": "#ff59eb",
     "secondary_color": "#00D5FB",
-    "head_url": "http://www.giphy.com/gifs/3o7btW7vWyqksA9x4c",
+    "head_url": "https://media.giphy.com/media/3o7btW7vWyqksA9x4c/giphy.gif",
     "name": "nake",
-    "taunt": "OH GOD NOT THE BEES",
+    "taunt": "Oh my gosh",
     "head_type": "tongue",
     "tail_type": "freckled"
     }
