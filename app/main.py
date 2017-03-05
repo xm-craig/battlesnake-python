@@ -8,6 +8,7 @@ width = 0
 height = 0
 snake_name = 'nake'
 taunt_count = 0
+last_circle_move = 'down'
 head = []
 
 @bottle.get('/')
@@ -130,6 +131,9 @@ def move():
   print 'best move', best_move
 
   taunt = taunt_gen()
+  
+  if len(data['snakes'] > 4):
+    best_move = get_next_circle_move
 
   return json.dumps({
     'move': best_move,
@@ -265,6 +269,22 @@ def square_empty(square, data):
       empty = False
       return empty
   return empty
+
+def get_next_circle_move:
+  global last_circle_move
+
+  if last_circle_move == 'down':
+    last_circle_move = 'left'
+    return 'left'
+  elif last_circle_move == 'left':
+    last_circle_move = 'up'
+    return 'up'
+  elif last_circle_move == 'up':
+    last_circle_move = 'right'
+    return 'right'
+  else:
+    last_circle_move = 'down'
+    return 'down'
 
 @bottle.post('/end')
 def end():
