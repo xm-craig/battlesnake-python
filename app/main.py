@@ -65,7 +65,7 @@ def move():
   final_countdown = False
 
   # find the snake_butts
-  if len(data['snakes']) > 2 and len(my_snake['coords'] > 15):
+  if len(data['snakes']) > 2 and len(my_snake['coords']) > 15:
     for snake in data['snakes']:
       # if snake isn't me
       if snake['name'] != snake_name:
