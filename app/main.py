@@ -57,7 +57,7 @@ def move():
   head = my_snake['coords'][0]
   my_data = my_snake
   my_length = len(my_snake['coords'])  
-  hungry = len(my_snake['coords']) == 3 or (my_snake['health_points'] < 60)
+  hungry = len(my_snake['coords']) == 6 or (my_snake['health_points'] < 60)
   print 'HUNGRY IS ' + str(hungry)
   print 'HEALTHPOINTS ' + str(my_snake['health_points']) 
 
