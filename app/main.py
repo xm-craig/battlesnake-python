@@ -270,7 +270,7 @@ def square_empty(square, data):
       return empty
   return empty
 
-def get_next_circle_move:
+def get_next_circle_move():
   global last_circle_move
 
   if last_circle_move == 'down':
