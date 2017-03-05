@@ -2,6 +2,8 @@ import bottle
 import json
 import math
 
+
+print 'STARTING UP'
 width = 0
 height = 0
 snake_name = 'nake'
@@ -204,11 +206,7 @@ def find_safe_square(head, data):
 
   if safe_sq == []:
     print 'No Safe Squares'
-    print 'HEAD ' 
-    print head
-    print 'DATA'
-    print data 
-    print '========================'
+    print adjacent
   return safe_sq
 
 def find_snake_parts(snake):
@@ -261,9 +259,8 @@ def square_empty(square, data):
   empty = True
   for snake in data['snakes']:
     if square in snake['coords']:
-      empty = False 
+      empty = False
       return empty
-  
   return empty
 
 @bottle.post('/end')
